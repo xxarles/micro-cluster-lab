@@ -14,6 +14,11 @@ RUN apt-get update && \
     apt-get install -y wget nano openjdk-8-jdk ssh openssh-server
 RUN apt update && apt install -y python3 python3-pip python3-dev build-essential libssl-dev libffi-dev libpq-dev
 
+RUN pip3 install --upgrade setuptools
+#RUN apt-get install libjpeg-dev zlib1g-dev
+ 
+RUN pip3 install --upgrade pip
+RUN pip3 install pillow
 COPY /confs/requirements.req /
 RUN pip3 install -r requirements.req
 RUN pip3 install dask[bag] --upgrade
@@ -24,9 +29,9 @@ RUN wget -P /tmp/ https://archive.apache.org/dist/hadoop/common/hadoop-2.7.0/had
 RUN tar xvf /tmp/hadoop-2.7.0.tar.gz -C /tmp && \
 	mv /tmp/hadoop-2.7.0 /opt/hadoop
 
-RUN wget -P /tmp/ https://downloads.apache.org/spark/spark-2.4.5/spark-2.4.5-bin-hadoop2.7.tgz
-RUN tar xvf /tmp/spark-2.4.5-bin-hadoop2.7.tgz -C /tmp && \
-    mv /tmp/spark-2.4.5-bin-hadoop2.7 ${SPARK_HOME}
+RUN wget -P /tmp/ https://downloads.apache.org/spark/spark-2.4.8/spark-2.4.8-bin-hadoop2.7.tgz
+RUN tar xvf /tmp/spark-2.4.8-bin-hadoop2.7.tgz -C /tmp && \
+    mv /tmp/spark-2.4.8-bin-hadoop2.7 ${SPARK_HOME}
 
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && \
 	cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && \
